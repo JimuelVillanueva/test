@@ -72,9 +72,9 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             animation: floatText 8s ease-in-out forwards;
             white-space: nowrap;
-            max-width: 80vw;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            max-width: 80vw; /* Limit the width */
+            word-wrap: break-word; /* Ensure long words break */
+            overflow-wrap: break-word; /* Ensure long words break */
         }
 
         @keyframes floatText {
@@ -105,7 +105,6 @@
                 padding: 20px;
             }
         }
-
     </style>
 </head>
 
@@ -126,35 +125,10 @@
             "You are a constant source of motivation and hope 💖"
         ];
 
-        let displayedMessages = [];
-
-        // Function to shuffle an array (Fisher-Yates shuffle algorithm)
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]]; // Swap
-            }
-        }
-
         // Function to create and show a new bubble with one full message at a time
         function createTextBubble() {
-            if (displayedMessages.length === messages.length) {
-                // Reset the displayed messages when all messages have been shown
-                displayedMessages = [];
-                shuffleArray(messages); // Shuffle the messages array
-            }
-
-            // Get a message that hasn't been displayed yet
-            const messageIndex = Math.floor(Math.random() * messages.length);
-            const randomMessage = messages[messageIndex];
-
-            if (!displayedMessages.includes(randomMessage)) {
-                displayedMessages.push(randomMessage); // Mark this message as displayed
-            } else {
-                // If the message is already displayed, try again
-                createTextBubble();
-                return;
-            }
+            // Pick a random message from the array
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
 
             // Create a new text bubble with the selected message
             const bubble = document.createElement("div");
